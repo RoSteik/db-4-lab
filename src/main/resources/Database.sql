@@ -42,12 +42,11 @@ CREATE TABLE user
 
 CREATE TABLE trip
 (
-    id          BIGINT,
+    id          BIGINT PRIMARY KEY AUTO_INCREMENT,
     start_point VARCHAR(50) NOT NULL,
     end_point   VARCHAR(50) NOT NULL,
     driver_id   BIGINT      NOT NULL,
     user_name   VARCHAR(50)      NOT NULL,
-    PRIMARY KEY (driver_id, user_name),
     CONSTRAINT FOREIGN KEY (driver_id) REFERENCES driver (id),
     CONSTRAINT FOREIGN KEY (user_name) REFERENCES user (name)
 );
@@ -91,38 +90,38 @@ values (1, 'a', 'b', 1, 'Sofia'),
        (3, 'e', 'f', 1, 'Zenoviy'),
        (4, 'g', 'h', 4, 'Lesya');
 
-CREATE PROCEDURE InsertDriverCar(
-    IN DriverNameIn varchar(25),
-    IN CarBrandIn varchar(45),
-    OUT msg varchar(40)
-)
-BEGIN
-    -- checks for present name
-    IF NOT EXISTS(SELECT * FROM driver WHERE name = DriverNameIn)
-    THEN
-        SET msg = 'This name is absent';
-
-        -- checks for present car
-    ELSEIF NOT EXISTS(SELECT * FROM car WHERE brand = CarBrandIn)
-    THEN
-        SET msg = 'This brand is absent';
-
-        -- checks if there are this combination already
-    ELSEIF EXISTS(SELECT *
-                  FROM driver_has_car
-                  WHERE driver_id = (SELECT id FROM driver WHERE name = DriverNameIn)
-                    AND car_id = (SELECT id FROM car WHERE brand = CarBrandIn)
-        )
-    THEN
-        SET msg = 'This driver already has this car';
-
-        -- makes insert
-    ELSE
-        INSERT driver_has_car (driver_id, car_id)
-            Value ((SELECT id FROM driver WHERE name = DriverNameIn),
-                   (SELECT id FROM car WHERE brand = CarBrandIn));
-        SET msg = 'OK';
-
-    END IF;
-
-END
+# CREATE PROCEDURE InsertDriverCar(
+#     IN DriverNameIn varchar(25),
+#     IN CarBrandIn varchar(45),
+#     OUT msg varchar(40)
+# )
+# BEGIN
+#     -- checks for present name
+#     IF NOT EXISTS(SELECT * FROM driver WHERE name = DriverNameIn)
+#     THEN
+#         SET msg = 'This name is absent';
+#
+#         -- checks for present car
+#     ELSEIF NOT EXISTS(SELECT * FROM car WHERE brand = CarBrandIn)
+#     THEN
+#         SET msg = 'This brand is absent';
+#
+#         -- checks if there are this combination already
+#     ELSEIF EXISTS(SELECT *
+#                   FROM driver_has_car
+#                   WHERE driver_id = (SELECT id FROM driver WHERE name = DriverNameIn)
+#                     AND car_id = (SELECT id FROM car WHERE brand = CarBrandIn)
+#         )
+#     THEN
+#         SET msg = 'This driver already has this car';
+#
+#         -- makes insert
+#     ELSE
+#         INSERT driver_has_car (driver_id, car_id)
+#             Value ((SELECT id FROM driver WHERE name = DriverNameIn),
+#                    (SELECT id FROM car WHERE brand = CarBrandIn));
+#         SET msg = 'OK';
+#
+#     END IF;
+#
+# END

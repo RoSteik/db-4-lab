@@ -23,7 +23,7 @@ import java.util.Optional;
 public class TripDaoImpl implements TripDao {
     private static final String FIND_ALL = "SELECT * FROM trip";
     private static final String CREATE = "INSERT trip(start_point, end_point, driver_id, user_name) VALUES (?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE trip SET start_point=?, end_point=?, driver_id=?, user_name=?";
+    private static final String UPDATE = "UPDATE trip SET start_point=?, end_point=?, driver_id=?, user_name=? WHERE id=?";
     private static final String DELETE = "DELETE FROM trip WHERE id=?";
     private static final String FIND_BY_ID = "SELECT * FROM trip WHERE id=?";
 

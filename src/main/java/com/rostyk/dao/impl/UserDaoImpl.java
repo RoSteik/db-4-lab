@@ -21,8 +21,8 @@ import java.util.Optional;
 @Service
 public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL = "SELECT * FROM user";
-    private static final String CREATE = "INSERT user(name) VALUES (?)";
-    private static final String UPDATE = "UPDATE user SET name=?";
+    private static final String CREATE = "INSERT user(name, rating) VALUES (?, ?)";
+    private static final String UPDATE = "UPDATE user SET rating=? where name=?";
     private static final String DELETE = "DELETE FROM user WHERE name=?";
     private static final String FIND_BY_ID = "SELECT * FROM user WHERE name=?";
 
@@ -51,13 +51,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int create(User user) {
-        return jdbcTemplate.update(CREATE, user.getName());
+        return jdbcTemplate.update(CREATE, user.getName(), user.getRating());
     }
 
     @Override
     public int update(String name, User user) {
-        return jdbcTemplate.update(UPDATE, user.getName(),user.getRating(),
-                                    name);
+        return jdbcTemplate.update(UPDATE, user.getRating(), name);
     }
 
     @Override

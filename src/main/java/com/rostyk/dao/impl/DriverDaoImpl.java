@@ -28,8 +28,8 @@ import java.util.Optional;
 public class DriverDaoImpl implements DriverDao {
 
     private static final String FIND_ALL = "SELECT * FROM driver";
-    private static final String CREATE = "INSERT driver(name, rating, completed_orders, is_vacant, user_name) VALUES (?, ?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE driver SET name=?, rating=?, completed_orders=?, is_vacant=?, user_name=? WHERE id=?";
+    private static final String CREATE = "INSERT driver(name, rating, completed_orders, is_vacant) VALUES (?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE driver SET name=?, rating=?, completed_orders=?, is_vacant=? WHERE id=?";
     private static final String DELETE = "DELETE FROM driver WHERE id=?";
     private static final String FIND_BY_ID = "SELECT * FROM driver WHERE id=?";
     private static final String FIND_ALL_CARS = "SELECT * FROM car WHERE EXISTS(SELECT * FROM driver_has_car WHERE car_id=id and driver_id=?)";
